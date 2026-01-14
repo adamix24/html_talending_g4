@@ -1,0 +1,74 @@
+* {
+        font-family: "Bangers", system-ui;
+        font-weight: 400;
+        font-style: normal;
+        }
+    
+    body{
+        background: url('../imgs/dragonball.jpg') no-repeat;
+        background-size: cover;
+        height: 100vh;
+        }
+
+    #div_contenedor {
+        width: 80%;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 5px 5px 5px gray;
+        min-height: 500px;
+
+    }
+
+    #divBotones {
+        width: 80%;
+        margin: 20px auto;
+        text-align: right;
+    }
+
+    #btnLInk {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #FEE900;
+        color: red;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+    #imgMarca {
+        display: block;
+        margin: 0 auto;
+    }
+
+    #img_autor {
+        display: block;
+        margin: 20px auto;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+
+
+     ul {
+            font-family: "Exo 2", system-ui;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        ul li:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+        /*cambiar el tipo de lista*/
+        ul {
+            list-style-type: square;
+        }

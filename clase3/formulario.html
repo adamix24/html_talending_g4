@@ -30,6 +30,7 @@
             padding: 15px;
             box-shadow: 5px 5px 5px gray;
             background: rgba(200, 200, 255, 0.8);
+            border-radius: 15px;
         }
 
         .campo {
@@ -54,11 +55,11 @@
 <body>
     <div id="div_contenedor">
         <h3>Formulario de registro</h3>
-        <form>
+        <form action="formulario_guardar.html">
 
             <div class="campo">
                 <label class="ttlx" for="nombre">Nombre:</label>
-                <input required type="text" id="nombre" name="nombre">
+                <input maxlength="20" required type="text" id="nombre" name="nombre">
             </div>
 
              <div class="campo">
@@ -84,7 +85,7 @@
 
             <div class="campo">
                 <label for="comentarios">Comentarios:</label><br>
-                <textarea id="comentarios" name="comentarios" rows="4" cols="50"></textarea>
+                <textarea  maxlength="500" id="comentarios" name="comentarios" rows="4" cols="50"></textarea>
             </div>
 
             <div class="campo">
