@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de fomulario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style>
+
+        input[type="text"], input[type="email"], select, textarea {
+            width: 200px;
+             font-family: "Bangers", system-ui;
+            font-weight: 400;
+            font-style: normal;
+            height: 25px;
+        }
+
+        textarea {
+            height: 80px;
+            width: 400px;
+        }
+
+        #div_contenedor {
+            width: 600px;
+            margin: 0 auto;
+            border: 2px solid black;
+            padding: 15px;
+            box-shadow: 5px 5px 5px gray;
+            background: rgba(200, 200, 255, 0.8);
+        }
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        .ttlx {
+            font-family: "Exo 2", system-ui;
+            font-weight: 600;
+            font-style: normal;
+            margin-right: 10px;
+          
+        }
+
+        body{
+            background: url('imgs/fondoluz.jpg') no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="div_contenedor">
+        <h3>Formulario de registro</h3>
+        <form>
+
+            <div class="campo">
+                <label class="ttlx" for="nombre">Nombre:</label>
+                <input required type="text" id="nombre" name="nombre">
+            </div>
+
+             <div class="campo">
+                <label  class="ttlx" for="nombre">Apellido:</label>
+                <input type="text" id="apellido" name="apellido">
+            </div>
+
+            <div class="campo">
+                <label  class="ttlx" for="email">Sexo:</label>
+                <label><input type="radio" name="sexo" value="M">Masculino</label>
+                 <label><input type="radio" name="sexo" value="F"> Femenino</label>
+            </div>
+
+            <div class="campo">
+                <label  class="ttlx" for="pais">Pais:</label>
+                <select id="pais" name="pais">
+                    <option value="RD">Republica Dominicana</option>
+                    <option value="US">Estados Unidos</option>
+                    <option value="MX">Mexico</option>
+                    <option value="OTRO">Otro</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="comentarios">Comentarios:</label><br>
+                <textarea id="comentarios" name="comentarios" rows="4" cols="50"></textarea>
+            </div>
+
+            <div class="campo">
+                <button type="submit">📩 Enviar</button>
+                <button type="reset">🗑️ Limpiar</button>
+            </div>
+
+
+
+        </form>
+
+    </div>
+</body>
+</html>

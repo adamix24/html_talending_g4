@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 1 de css</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
+    <style>
+        h1, h2 {
+            color: rgb(255, 140, 0);
+            font-family: "Bangers", system-ui;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        #contendorPrincipal {
+            width: 80%;
+            margin: 0 auto;
+            border: 2px solid black;
+            padding: 10px;
+            box-shadow: 5px 5px 5px gray;
+            min-height: 500px;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        body{
+            background: url('imgs/cuaderno.jpg');
+        }
+
+        #bandera {
+            width: 300px;
+            height: 200px;
+            border: 2px solid black;
+            border-collapse: collapse;
+            box-shadow: 5px 5px 5px gray;
+        }
+
+        .c_azul {
+            background-color: blue;
+            width: 120px;
+            height: 70px;
+        }
+
+        .c_rojo {
+            background-color: red;
+            width: 120px;
+            height: 70px;
+        }
+
+        #escudoDom {
+            background: url('imgs/escudo.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            
+        }
+
+        #bandera td:hover{
+            opacity: 0.5;
+            background:yellow;
+            cursor: pointer;
+        }
+
+        #tablaEmpleados {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 5px 5px 5px gray;
+        }
+
+        #tablaEmpleados th {
+            background-color: black;
+            color: white;
+        }
+
+        #tablaEmpleados tr:hover {
+            background-color: lightgray;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="contendorPrincipal">
+
+        <h1 id="tituloPrincipal">Ejemplos de css
+            
+
+        </h1>
+
+        <h1>Otro Titulo</h1>
+
+        <h2>Tablas</h2>
+
+        <table id="bandera" >
+            <tr>
+                <td title="Representa el cielo" class="c_azul"></td>
+                <td></td>
+                <td title="Representa la sangre derramada" class="c_rojo"></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td title="Escudo Dominicano" id="escudoDom"></td>
+                <td></td>
+            </tr>
+
+            
+            <tr>
+                <td class="c_rojo"></td>
+                <td></td>
+                <td class="c_azul"></td>
+            </tr>
+
+
+        </table>
+
+        <h2>Tabla de Empleados</h2>
+
+        <table border="1" cellspacing="0" cellpadding="5" id="tablaEmpleados">
+            <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Departamento</th>
+            </tr>
+
+            <tr>
+                <td>Ana Perez</td>
+                <td>28</td>
+                <td>Ventas</td>
+            </tr>
+
+            <tr>
+                <td>Carlos Lopez</td>
+                <td>35</td>
+                <td>Marketing</td>
+            </tr>
+
+            <tr>
+                <td>Maria Gomez</td>
+                <td>30</td>
+                <td>Finanzas</td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>
