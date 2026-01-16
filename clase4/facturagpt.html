@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Factura #12345</title>
+
+  <style>
+    :root{
+      --ink:#111;
+      --muted:#444;
+      --line:#1a1a1a;
+      --soft:#f3f3f3;
+      --page-w: 980px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:#fff;
+    }
+
+    /* Simula el borde azul superior */
+    .top-bar{
+      height:6px;
+      background:#0b5cff;
+    }
+
+    .page{
+      max-width: var(--page-w);
+      margin: 24px auto 48px;
+      padding: 0 20px;
+    }
+
+    /* Encabezado */
+    .header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+
+    .title{
+      margin:0;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .logo{
+      width: 140px;
+      height: 140px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    /* Sección cliente */
+    .section-label{
+      font-weight: 800;
+      margin: 16px 0 10px;
+      font-size: 18px;
+    }
+
+    .client{
+      line-height: 1.9;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .client strong{
+      color: var(--ink);
+    }
+
+    /* Tabla */
+    .table-wrap{
+      margin-top: 20px;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      border: 2px solid var(--line);
+      table-layout: fixed;
+      font-size: 18px;
+    }
+    thead th{
+      background: var(--soft);
+      font-weight: 800;
+      text-align:left;
+      padding: 12px 12px;
+      border: 2px solid var(--line);
+    }
+    tbody td{
+      padding: 14px 12px;
+      border: 2px solid var(--line);
+      vertical-align: top;
+    }
+
+    /* Anchuras similares a la imagen */
+    .col-desc{ width: 42%; }
+    .col-qty{ width: 16%; }
+    .col-unit{ width: 22%; }
+    .col-total{ width: 20%; }
+
+    .num{ text-align:right; }
+    .qty{ text-align:left; } /* en la imagen parece alineado a la izquierda */
+
+    /* Totales */
+    .totals{
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 2.0;
+    }
+    .totals .grand{
+      color: var(--ink);
+      font-weight: 900;
+      margin-top: 6px;
+    }
+
+    /* Botones */
+    .actions{
+      margin-top: 26px;
+      display:flex;
+      gap: 18px;
+      justify-content:flex-start;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 14px 18px;
+      border: 1.6px solid #777;
+      background: #eee;
+      color: #111;
+      font-size: 16px;
+      border-radius: 2px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{ filter: brightness(0.98); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn svg{
+      width:18px;
+      height:18px;
+      flex:0 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px){
+      .header{ flex-direction:column; align-items:flex-start; }
+      .logo{ align-self:flex-end; }
+      .title{ font-size: 24px; }
+      .client{ font-size: 16px; }
+      table{ font-size: 16px; }
+      .totals{ font-size: 16px; }
+    }
+
+    /* Estilos de impresión */
+    @media print{
+      .top-bar{ display:none; }
+      .actions{ display:none; }
+      .page{ margin:0; max-width:none; }
+      body{ background:#fff; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-bar"></div>
+
+  <div class="page">
+    <div class="header">
+      <h1 class="title">Factura #12345</h1>
+
+      <!-- Logo: reemplaza el src por tu imagen -->
+      <div class="logo" aria-label="Logo">
+        <img src="imgs/logo.png" alt="Logo">
+      </div>
+    </div>
+
+    <div class="section-label">Cliente:</div>
+
+    <div class="client">
+      <div><strong>Nombre:</strong> Juan Perez</div>
+      <div><strong>Dirección:</strong> Calle Falsa 123</div>
+      <div><strong>Teléfono:</strong> 555-1234</div>
+      <div style="margin-top:10px;"><strong>Concepto:</strong> Desarrollo de sitio web</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-desc">Descripción</th>
+            <th class="col-qty">Cantidad</th>
+            <th class="col-unit">Precio Unitario</th>
+            <th class="col-total">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Diseño web</td>
+            <td class="qty">1</td>
+            <td class="num">$500.00</td>
+            <td class="num">$500.00</td>
+          </tr>
+          <tr>
+            <td>Desarrollo front-end</td>
+            <td class="qty">1</td>
+            <td class="num">$800.00</td>
+            <td class="num">$800.00</td>
+          </tr>
+          <tr>
+            <td>Desarrollo back-end</td>
+            <td class="qty">1</td>
+            <td class="num">$700.00</td>
+            <td class="num">$700.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="totals">
+      <div><strong>Subtotal:</strong> $2000.00</div>
+      <div><strong>Impuestos (15%):</strong> $300.00</div>
+      <div class="grand"><strong>Total:</strong> $2300.00</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="button" onclick="window.print()">
+        <!-- icono imprimir -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 7V3h10v4" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M6 17H5a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M7 14h10v7H7z" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Imprimir Factura
+      </button>
+
+      <button class="btn" type="button" onclick="alert('Aquí iría tu lógica para enviar por email')">
+        <!-- icono email -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Enviar por Email
+      </button>
+
+      <button class="btn" type="button" onclick="alert('Aquí iría tu lógica para generar/descargar PDF')">
+        <!-- icono download -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3v10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="m8 10 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 20h16" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Descargar PDF
+      </button>
+    </div>
+  </div>
+</body>
+</html>

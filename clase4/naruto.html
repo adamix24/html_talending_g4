@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            max-width: 160px;
+        }
+    </style>
+</head>
+<body>
+    <img ondblclick="defenderse(this);" title="No ataques a mi aldea" src="imgs/naruto.webp" alt="Naruto">
+
+    <script>
+        function defenderse(imgx){
+            let imagenNueva = document.createElement("img");
+            imagenNueva.src = imgx.src;
+            document.body.appendChild(imagenNueva);
+            imagenNueva.setAttribute("ondblclick", "defenderse(this);");
+        }
+    </script>
+</body>
+</html>
