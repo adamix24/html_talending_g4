@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de gastos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body onload="cargar()">
+    <div class="container mt-4">
+        <div>
+            <h2>Gestor de Gastos</h2>
+        </div>
+        <div>
+            <h3>Gastos Realizados</h3>
+            <table class="table table-bordered table-dark">
+                <thead>
+                    <tr>
+                        <th>n</th>
+                        <th>Descripcion</th>
+                        <th>Tipo</th>
+                        <th>Monto</th>
+                        <td>-</td>
+                    </tr>
+                </thead>
+                <tbody id="tbDatos">
+                   
+                </tbody>
+            </table>
+            <div class="text-end">
+                Total Gastado: <span id="spTotal">##</span>
+            </div>
+        </div>
+        <div>
+            <h3>Agregar Gasto</h3>
+            <form onsubmit="guardarGasto(); return false;" id="frmGasto">
+                <div class="mb-3    ">   
+                    <label for="descripcion" class="form-label">Concepto</label>
+                    <input required class="form-control" type="text" id="o_descripcion">
+                </div>
+
+                 <div class="mb-3    ">   
+                    <label for="categoria" class="form-label">Categoria</label>
+                    <select required id="o_categoria" class="form-control">
+                        <option value="">Selecci&oacute;n</option>
+                        <option value="alimento">Alimento</option>
+                        <option value="ocio">Ocio</option>
+                        <option value="educacion">Educaci&oacute;n</option>
+                        <option value="lujo">Lujo</option>
+                        
+                    </select>
+                </div>
+                <div class="mb-3    ">   
+                    <label for="monto" class="form-label">Monto</label>
+                    <input class="form-control" type="number" min="1" required id="o_monto">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary"> Guardar</button>
+                    
+                    <input type="reset" class="btn btn-warning" value="Limpiar"/>
+
+                    <a href="reporte.html" class="btn btn-link">Reporte</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+
+        let gastos = [];
+
+        function guardarGasto(){
+
+            let gasto = {};
+            gasto.concepto = document.getElementById('o_descripcion').value;
+            gasto.categoria = document.getElementById('o_categoria').value;
+            gasto.monto = document.getElementById('o_monto').value;
+
+            gastos.push(gasto);
+            document.getElementById('frmGasto').reset();
+
+            guardar();
+            mostrarDatos();
+
+        }
+
+        function guardar(){
+            let datos = JSON.stringify(gastos);
+             localStorage.setItem('gastos',datos);
+        }
+
+        function cargar(){
+            let datos = localStorage.getItem('gastos');
+            gastos = JSON.parse(datos);
+            mostrarDatos();
+
+        }
+
+        function mostrarDatos(){
+
+            destino = document.getElementById('tbDatos');
+            destino.innerHTML = '';
+
+            let total = 0;
+
+            for(x=0; x < gastos.length; x++){
+                gasto = gastos[x];
+
+                tr = document.createElement('tr');
+
+                td = document.createElement('td');
+                td.innerHTML = x+1;
+                tr.appendChild(td);
+
+                td = document.createElement('td');
+                td.innerHTML = gasto.concepto;
+                tr.appendChild(td);
+
+                td = document.createElement('td');
+                td.innerHTML = gasto.categoria;
+                tr.appendChild(td);
+
+
+                td = document.createElement('td');
+                td.innerHTML = gasto.monto;
+                tr.appendChild(td);
+
+                //para sumar el total
+                total = total + parseInt(gasto.monto);
+
+                td = document.createElement('td');
+                btn = document.createElement('button');
+                btn.innerHTML = 'X';
+                btn.setAttribute('class', 'btn btn-danger');
+                btn.type = 'button';
+                btn.setAttribute('onclick',`quitarElemento(${x})`);
+                td.appendChild(btn);
+                tr.appendChild(td);
+
+
+                destino.appendChild(tr);
+
+
+            }
+
+            document.getElementById('spTotal').innerHTML = total;
+
+        }
+
+        function quitarElemento(ii){
+
+            let elemento = gastos[ii];
+            
+            let mensaje =  `Esta seguro que quiere eliminar a ${elemento.concepto}`;
+
+            if(confirm(mensaje)){
+                gastos.splice(ii, 1);
+                guardar();
+                mostrarDatos();
+            }
+        }
+
+    </script>
+</body>
+</html>
