@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record of Ragnarok - Inicio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body id="body-index">
+    <!-- Navegación -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-fist-raised"></i>
+                </div>
+                <div class="logo-text">Record of <span>Ragnarok</span></div>
+            </div>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="index.html" class="active">Inicio</a></li>
+                    <li><a href="protagonistas.html">Protagonistas</a></li>
+                    <li><a href="batallas.html">Batallas</a></li>
+                    <li><a href="tecnicas.html">Técnicas</a></li>
+                    <li><a href="acerca.html">Acerca de</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Record of Ragnarok</h1>
+                <h2>La batalla definitiva entre dioses y humanos</h2>
+                <p>En cada ronda, un humano famoso de la historia se enfrenta a un dios de diferentes mitologías en un combate a muerte. Los humanos luchan por la supervivencia de la humanidad, mientras que los dioses buscan su extinción. ¿Quién prevalecerá en este torneo épico?</p>
+                <a href="#sinopsis" class="btn">Descubre más</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sinopsis Section -->
+    <section class="sinopsis" id="sinopsis">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sinopsis</h2>
+            </div>
+            
+            <div class="sinopsis-content">
+                <div class="sinopsis-img">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Ragnarok Concept">
+                </div>
+                <div class="sinopsis-text">
+                    <h3>La última esperanza de la humanidad</h3>
+                    <p>Record of Ragnarok es una serie de manga escrita por Shinya Umemura y Takumi Fukui, e ilustrada por Ajichika. La historia gira en torno a un torneo organizado por los dioses cada 1000 años para decidir el destino de la humanidad.</p>
+                    <p>Después de 7 millones de años de historia humana, los dioses del panteón se reúnen para decidir si la humanidad merece seguir existiendo o debe ser extinguida. Como última oportunidad, Brunhilda, una de las valquirias, propone la celebración del "Ragnarok", un torneo donde 13 humanos notables de la historia se enfrentarán a 13 dioses en combates individuales.</p>
+                    <p>Cada combate es a muerte, y la humanidad ganará si consigue 7 victorias antes que los dioses. De lo contrario, será completamente aniquilada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concepto Section -->
+    <section class="concepto">
+        <div class="container">
+            <div class="section-title">
+                <h2>Concepto de la Serie</h2>
+            </div>
+            
+            <div class="concepto-grid">
+                <div class="concepto-card">
+                    <div class="concepto-icon">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <h3>Humanos Épicos</h3>
+                    <p>Los representantes humanos son figuras históricas y legendarias como Lu Bu, Adán, Sasaki Kojiro, Jack el Destripador y Simo Häyhä, cada uno con habilidades únicas.</p>
+                </div>
+                
+                <div class="concepto-card">
+                    <div class="concepto-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Dioses Poderosos</h3>
+                    <p>Las deidades de diferentes mitologías como Zeus, Thor, Shiva, Hércules y Buda se enfrentan a los humanos en combates que desafían toda lógica.</p>
+                </div>
+                
+                <div class="concepto-card">
+                    <div class="concepto-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Volundr</h3>
+                    <p>Las valquirias se transforman en armas divinas llamadas "Volundr" para potenciar a los humanos y permitirles dañar a los dioses en combate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Record of <span>Ragnarok</span></div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Record of Ragnarok Fan Page. Esta es una página de fans sin fines de lucro. Todos los derechos pertenecen a sus respectivos creadores.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menú móvil
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+        
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Efecto smooth scroll para el botón
+        document.querySelector('.btn').addEventListener('click', function(e) {
+            if(this.getAttribute('href') === '#sinopsis') {
+                e.preventDefault();
+                document.querySelector('#sinopsis').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
