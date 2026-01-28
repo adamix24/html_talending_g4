@@ -388,3 +388,16 @@
                 gap: 20px;
             }
         }
+
+
+        #body-index {
+            background: url('../clase3/imgs/fondo_index.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+        }
+
+        #body-protagonistas {
+            background: url('../clase3/imgs/fondo_protagonistas.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+        }

@@ -66,10 +66,12 @@
     </div>
     <script>
 
+        //array para guardar los gastos
         let gastos = [];
 
         function guardarGasto(){
 
+            //crear un objeto gasto
             let gasto = {};
             gasto.concepto = document.getElementById('o_descripcion').value;
             gasto.categoria = document.getElementById('o_categoria').value;
@@ -90,36 +92,48 @@
 
         function cargar(){
             let datos = localStorage.getItem('gastos');
-            gastos = JSON.parse(datos);
-            mostrarDatos();
+            if(datos != null){
+                gastos = JSON.parse(datos);
+                mostrarDatos();
+            }
+            else{
+                alert('No hay datos guardados');
+            }
 
         }
 
         function mostrarDatos(){
 
+            //limpiar la tabla
             destino = document.getElementById('tbDatos');
             destino.innerHTML = '';
 
             let total = 0;
 
+            //recorrer el array de gastos y mostrarlos en la tabla
             for(x=0; x < gastos.length; x++){
                 gasto = gastos[x];
 
+                //crear una fila
                 tr = document.createElement('tr');
 
+
+                //crear la columna para el numero
                 td = document.createElement('td');
                 td.innerHTML = x+1;
                 tr.appendChild(td);
 
+                //crear la columna para la descripcion
                 td = document.createElement('td');
                 td.innerHTML = gasto.concepto;
                 tr.appendChild(td);
 
+                //crear la columna para la categoria
                 td = document.createElement('td');
                 td.innerHTML = gasto.categoria;
                 tr.appendChild(td);
 
-
+                //crear la columna para el monto
                 td = document.createElement('td');
                 td.innerHTML = gasto.monto;
                 tr.appendChild(td);
@@ -127,6 +141,7 @@
                 //para sumar el total
                 total = total + parseInt(gasto.monto);
 
+                //crear la columna para el boton de eliminar
                 td = document.createElement('td');
                 btn = document.createElement('button');
                 btn.innerHTML = 'X';
@@ -136,12 +151,13 @@
                 td.appendChild(btn);
                 tr.appendChild(td);
 
-
+                //agregar la fila a la tabla
                 destino.appendChild(tr);
 
 
             }
 
+            //mostrar el total
             document.getElementById('spTotal').innerHTML = total;
 
         }

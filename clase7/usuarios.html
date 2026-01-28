@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- add bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Lista de Usuarios</h2>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Edad</th>
+                </tr>
+            </thead>
+            <tbody id="tbUsuarios">
+                <!-- aqui van los usuarios -->
+            </tbody>
+
+
+        </table>
+
+
+    </div>    
+
+    <script>
+
+        let usuarios = [];
+
+        let url = 'https://randomuser.me/api/?results=100';
+
+
+        fetch(url).then( response => response.json() )
+        .then( data => {
+            usuarios = data.results;
+           
+
+            for(let i=0; i<usuarios.length; i++){
+                let usuario = usuarios[i];
+                console.log(usuario.name.first + ' ' + usuario.name.last + ' - ' + usuario.email);
+                
+                //crear una fila
+                let tr = document.createElement('tr');
+
+                //crear la columna de la foto
+                let tdFoto = document.createElement('td');
+                let img = document.createElement('img');
+                img.src = usuario.picture.thumbnail;
+                tdFoto.appendChild(img);
+                tr.appendChild(tdFoto);
+
+
+                //crear la columna del nombre
+                let tdNombre = document.createElement('td');
+                tdNombre.innerHTML = usuario.name.first;
+                tr.appendChild(tdNombre);
+
+                //crear la columna del apellido
+                let tdApellido = document.createElement('td');
+                tdApellido.innerHTML = usuario.name.last;
+                tr.appendChild(tdApellido);
+
+                //crear la columna del email
+                let tdEmail = document.createElement('td');
+                tdEmail.innerHTML = usuario.email;
+                tr.appendChild(tdEmail);
+
+                //crear la columna de la edad
+                let tdEdad = document.createElement('td');
+                tdEdad.innerHTML = usuario.dob.age;
+                tr.appendChild(tdEdad);
+            
+                //agregar la fila a la tabla
+                document.getElementById('tbUsuarios').appendChild(tr);
+            
+            }
+
+        }).catch( error => {
+            alert('Error al obtener los usuarios:');
+        });
+
+
+
+    </script>
+
+</body>
+</html>
