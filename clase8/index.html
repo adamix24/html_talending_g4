@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Facturacion Super PLUS</title>
+
+    <!-- add bootstrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"></script>
+
+    <!-- add fontawesome 5-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- sweetalert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Sistema de Facturacion Super PLUS</h2>
+        
+        <div class="divFactura d-none">
+            <h3>Datos de la factura</h3>
+
+            <form id="formFactura" >
+
+                <!-- codigo de la factura a la derecha -->
+                <div class="row mb-3">
+
+                    <div class="col-md-6 offset-md-6">
+                        <label for="numeroFactura" class="form-label">Número de la Factura</label>
+                        <input type="text" class="form-control" id="txtNumeroFactura" value="AUTO_GENERADO" readonly>
+                    </div>
+                </div>  
+
+                <!--  fecha en fila 1-->
+                <div class="row mb-3">
+                    <div class="col col-md-6 ">
+                        <label for="Rnc" class="form-label">Rnc Cliente</label>
+                        <input type="text" placeholder="Ingrese el RNC o Cedula" class="form-control" id="txtRnc" required>
+                    </div>
+                    <div class="col col-md-6 ">
+                        <label for="fechaFactura" class="form-label">Fecha de la Factura</label>
+                        <input type="date" class="form-control" id="txtFecha" required>
+                    </div>
+                </div>
+                <!-- nombre del cliente-->
+                <div class="mb-3">
+                    <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
+                    <input type="text" class="form-control" id="txtNombreCliente" required>
+                </div>
+
+                <div id="divDetalle">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>Precio </th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                                <td><button onclick="nuevaFila()" type="button" class="btn btn-success btn-sm" id="btnAgregarFila">
+                                    <i class="fas fa-plus"></i>
+                                </button></td>
+                            </tr>
+                        </thead>
+                        <tbody id="tbDetalleFactura">
+                            <!-- filas de detalle -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                <td>
+                                    <input type="text" class="form-control" id="txtTotal" readonly value="0.00">
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+
+                <div id="divBotones" class="mb-3">
+                    <button type="button" onclick="guardarFactura();" class="btn btn-primary" id="btnGuardarFactura">
+                        <i class="fas fa-save"></i> Guardar Factura
+                    </button>
+                    <button type="button" onclick="cancelarFactura();" class="btn btn-danger" id="btnCancelarFactura">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" onclick="imprimirActual();" class="btn btn-secondary" id="btnNuevaFactura">
+                        <i class="fas fa-print"></i> Imprimir Factura
+                    </button>
+                    <button type="button" class="btn btn-warning" id="btnCancelarFactura">
+                       <!-- nueva factura-->
+                        <i class="fas fa-plus"></i> Nueva Factura 
+                    </button>
+                </div>
+
+            </form>
+
+
+        </div>
+
+        <div id="divHistorialFactura" class="mt-4">
+            <h3>Historial de Facturas</h3>
+            <div class="text-end mb-2">
+                <button onclick="nuevaFacutura()" type="button" class="btn btn-success btn-sm" id="btnNuevaFactura2">
+                    <i class="fas fa-plus"></i> Nueva Factura
+                </button>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Número de Factura</th>
+                        <th>RNC Cliente</th>
+                        <th>Nombre del Cliente</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="tbHistorialFactura">
+                    <!-- aqui van las facturas -->
+                </tbody>
+            </table>
+        </div>  
+
+
+    </div>
+
+    <iframe id="ifImpresion" style="display:none;">
+
+
+    </iframe>
+
+    <script>
+
+        let facturas = [];
+
+        let facturaActual = null;
+
+        function imprimirActual(){
+            if(facturaActual !== null){
+                imprimirFactura(facturaActual);
+            }else{
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No hay una factura seleccionada para imprimir.',
+                    icon: 'error'
+                });
+            }
+        }
+
+
+        function cambiarVista(tipo){
+            if(tipo == 'factura'){
+                document.querySelector('.divFactura').classList.remove('d-none');
+                document.getElementById('divHistorialFactura').classList.add('d-none');
+            }else{
+                document.querySelector('.divFactura').classList.add('d-none');
+                document.getElementById('divHistorialFactura').classList.remove('d-none');
+            }
+        }
+
+        function nuevaFacutura(){
+            document.getElementById('formFactura').reset();
+            document.getElementById('tbDetalleFactura').innerHTML = '';
+            facturaActual = null;
+
+            cambiarVista('factura');
+
+            
+        }
+
+        function cancelarFactura(){
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Se perderán los datos ingresados",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, cancelar',
+                cancelButtonText: 'Continuar editando'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                      facturaActual = null;
+                    document.getElementById('formFactura').reset();
+                    document.getElementById('tbDetalleFactura').innerHTML = '';
+
+                    cambiarVista('historial');
+                }
+            });
+          
+        }
+
+        function nuevaFila(){
+
+            agregarFila('', '', 0, 1);
+        }
+
+        function agregarFila(codigo, nombre, precio, cantidad){
+            let destino = document.getElementById('tbDetalleFactura');
+
+            let tr = document.createElement('tr');
+
+            tr.innerHTML = `
+                <td><input type="text" class="form-control" value="${codigo}" name="txtCodigo[]"></td>
+                <td><input type="text" class="form-control" value="${nombre}" name="txtNombre[]"></td>
+                <td><input type="number" onchange="calcularTotal();" class="form-control" value="${precio.toFixed(2)}" name="txtPrecio[]" min="0" step="0.01"></td>
+                <td><input type="number" onchange="calcularTotal();" class="form-control" value="${cantidad}" name="txtCantidad[]" min="1" step="1"></td>
+                <td><input type="text" class="form-control" value="${(precio * cantidad).toFixed(2)}" name="txtSubtotal[]" readonly></td>
+                <td>
+                    <button onclick="quitarFila(this)" type="button" class="btn btn-danger btn-sm btnEliminarFila">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            destino.appendChild(tr);
+        }
+
+        function calcularTotal(){
+            let precios = document.getElementsByName('txtPrecio[]');
+            let cantidades = document.getElementsByName('txtCantidad[]');
+            let subtotales = document.getElementsByName('txtSubtotal[]');
+
+            let total = 0;
+
+            for(let x =0; x < precios.length; x++){
+               let subtotal = parseFloat(precios[x].value) * parseInt(cantidades[x].value);
+                subtotales[x].value = subtotal.toFixed(2);
+
+                total += subtotal;
+            }
+
+            document.getElementById('txtTotal').value = total.toFixed(2);
+        }
+
+        function guardarFactura(){
+
+            let numero = document.getElementById('txtNumeroFactura').value;
+            if(numero === 'AUTO_GENERADO'){
+                //generar numero AAAA-AA######
+                let fecha = new Date();
+                let anio = fecha.getFullYear();
+                let mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                let numeroAleatorio = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+                numero = `${anio}-${mes}${numeroAleatorio}`;
+            }
+
+            let objFactura = {
+                numeroFactura: numero,
+                rncCliente: document.getElementById('txtRnc').value,
+                nombreCliente: document.getElementById('txtNombreCliente').value,
+                fecha: document.getElementById('txtFecha').value,
+                total: parseFloat(document.getElementById('txtTotal').value),
+                detalles: []
+            };
+
+            let codigos = document.getElementsByName('txtCodigo[]');
+            let nombres = document.getElementsByName('txtNombre[]');
+            let precios = document.getElementsByName('txtPrecio[]');
+
+            let cantidades = document.getElementsByName('txtCantidad[]');
+
+            for(let x=0; x < codigos.length; x++){
+                let detalle = {
+                    codigo: codigos[x].value,
+                    nombre: nombres[x].value,
+                    precio: parseFloat(precios[x].value),
+                    cantidad: parseInt(cantidades[x].value)
+                };
+                objFactura.detalles.push(detalle);
+            }
+
+
+            let errores = [];
+
+            if(objFactura.rncCliente === ''){
+                errores.push('El RNC del cliente es obligatorio.');
+            }
+
+            if(objFactura.nombreCliente === ''){
+                errores.push('El nombre del cliente es obligatorio.');
+            }
+
+            if(objFactura.fecha === ''){
+                errores.push('La fecha es obligatoria.');
+            }
+
+            if(objFactura.detalles.length < 1 ){
+                errores.push('La factura debe tener al menos un detalle.');
+            }else{
+                objFactura.detalles.forEach(detalle => {
+                    if(detalle.codigo === ''){
+                        errores.push('El código del producto es obligatorio.');
+                    }
+                    if(detalle.nombre === ''){
+                        errores.push('El nombre del producto es obligatorio.');
+                    }
+                    if(detalle.precio <= 0){
+                        errores.push('El precio del producto debe ser mayor que cero.');
+                    }
+                    if(detalle.cantidad < 1){
+                        errores.push('La cantidad del producto debe ser al menos 1.');
+                    }
+                });
+            }
+
+            if(errores.length > 0){
+                Swal.fire({
+                    title: 'Errores en el formulario',
+                    html: errores.join('<br>'),
+                    icon: 'error'
+                });
+                return;
+            }
+
+            if(facturaActual !== null){
+                //editar factura existente
+                facturas[facturaActual] = objFactura;
+                
+            }else{
+                facturas.push(objFactura);
+            }
+            guardarEnDispositivo();
+
+            /// imprimir la factura guardada
+            if(facturaActual !== null){
+                imprimirFactura(facturaActual);
+            }else{
+                imprimirFactura(facturas.length -1);
+            }
+
+
+            facturaActual = null;
+            Swal.fire({
+                title: 'Factura guardada',
+                text: 'La factura se ha guardado correctamente.',
+                icon: 'success'
+            });
+
+            //limpiar el formulario
+            document.getElementById('formFactura').reset();
+            document.getElementById('tbDetalleFactura').innerHTML = '';
+
+            cambiarVista('historial');
+            mostrarHistorial();
+        }
+
+        function guardarEnDispositivo(){
+            localStorage.setItem('facturas', JSON.stringify(facturas));
+
+            
+        }
+
+        function cargarDesdeDispositivo(){
+            let datos = localStorage.getItem('facturas');
+            if(datos){
+                facturas = JSON.parse(datos);
+            }
+        }
+
+        function quitarFila(botonx){
+
+           
+
+            //confirm con sweetalert2
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás deshacer esta acción",
+                icon: 'danger',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    botonx.parentNode.parentNode.remove();
+                }
+            });
+        }
+
+        function mostrarHistorial(){
+            let destino = document.getElementById('tbHistorialFactura');
+            destino.innerHTML = '';
+
+            for(let x=0; x < facturas.length; x++){
+                let factura = facturas[x];
+
+            
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${factura.numeroFactura}</td>
+                    <td>${factura.rncCliente}</td>
+                    <td>${factura.nombreCliente}</td>
+                    <td>${factura.fecha}</td>
+                    <td>${factura.total.toFixed(2)}</td>
+                    <td>
+                            <button onclick="editarFactura('${x}')" type="button" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="imprimirFactura('${x}')" type="button" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                `;
+                destino.appendChild(tr);
+            }
+        }
+
+        function imprimirFactura(indice){
+            let ifImpresion = document.getElementById('ifImpresion');
+            ifImpresion.src = 'imprimir.html?codigo=' + indice;
+        }
+
+        function editarFactura(indice){
+
+            cambiarVista('factura');
+            let factura = facturas[indice];
+
+            facturaActual = indice;
+
+            document.getElementById('txtNumeroFactura').value = factura.numeroFactura;
+            document.getElementById('txtRnc').value = factura.rncCliente;
+            document.getElementById('txtNombreCliente').value = factura.nombreCliente;
+            document.getElementById('txtFecha').value = factura.fecha;
+
+            //limpiar detalle
+            document.getElementById('tbDetalleFactura').innerHTML = '';
+
+            //agregar detalles
+            for(let x=0; x < factura.detalles.length; x++){
+                let detalle = factura.detalles[x];
+                agregarFila(detalle.codigo, detalle.nombre, detalle.precio, detalle.cantidad);
+            }
+
+            calcularTotal();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarDesdeDispositivo();
+            mostrarHistorial();
+        });
+
+    </script>
+</body>
+</html>
